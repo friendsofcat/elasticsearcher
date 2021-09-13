@@ -147,6 +147,8 @@ class IndicesManager extends AbstractManager
 			'body'  => $index->getBody()
 		];
 
+//		var_dump($params);
+
 		$this->elasticSearcher->getClient()->indices()->create($params);
 	}
 

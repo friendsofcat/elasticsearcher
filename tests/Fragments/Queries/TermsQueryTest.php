@@ -1,6 +1,7 @@
 <?php
 
 use ElasticSearcher\Fragments\Queries\TermsQuery;
+use PHPUnit\Framework\TestCase as PHPUnit_Framework_TestCase;
 
 class TermsQueryTest extends PHPUnit_Framework_TestCase
 {

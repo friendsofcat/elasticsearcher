@@ -2,6 +2,7 @@
 
 use ElasticSearcher\Environment;
 use ElasticSearcher\ElasticSearcher;
+use PHPUnit\Framework\TestCase as PHPUnit_Framework_TestCase;
 
 /**
  * ElasticSearcher specific test case handling.
