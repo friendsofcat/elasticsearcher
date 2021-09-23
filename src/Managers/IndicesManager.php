@@ -98,7 +98,7 @@ class IndicesManager extends AbstractManager
 	 */
 	public function indices()
 	{
-		return $this->elasticSearcher->getClient()->indices()->getMapping();
+		return $this->elasticSearcher->getClient()->indices()->getMapping(['include_type_name' => true]);
 	}
 
 	/**
@@ -111,7 +111,8 @@ class IndicesManager extends AbstractManager
 		$index = $this->getRegistered($indexName);
 
 		$params = [
-			'index' => $index->getInternalName()
+			'index' => $index->getInternalName(),
+			'include_type_name' => true,
 		];
 
 		return $this->elasticSearcher->getClient()->indices()->getMapping($params);
@@ -129,7 +130,8 @@ class IndicesManager extends AbstractManager
 
 		$params = [
 			'index' => $index->getInternalName(),
-			'type'  => $type
+			'type'  => $type,
+			'include_type_name' => true,
 		];
 
 		return $this->elasticSearcher->getClient()->indices()->getMapping($params);
@@ -230,7 +232,7 @@ class IndicesManager extends AbstractManager
 
 		$params = [
 			'index' => $index->getInternalName(),
-			'type'  => $type
+			'type'  => $type,
 		];
 
 		return $this->elasticSearcher->getClient()->indices()->existsType($params);

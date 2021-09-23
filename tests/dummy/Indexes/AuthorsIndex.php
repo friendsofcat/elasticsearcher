@@ -21,12 +21,6 @@ class AuthorsIndex extends AbstractIndex
 					'last_name' => ['type' => 'text']
 				]
 			],
-			'producers' => [
-				'properties' => [
-					'id' => ['type' => 'integer'],
-					'name' => ['type' => 'text']
-				]
-			]
 		]);
 	}
 }

@@ -66,10 +66,11 @@ class IndicesManagerTest extends ElasticSearcherTestCase
 
 		$expectedIndex = [
 			'authors' => [
-			    'mappings' => array_intersect_key($authorsIndex->getTypes(), array_flip((array) 'producers')),
+			    'mappings' => $authorsIndex->getTypes(),
             ],
 		];
-		$this->assertEquals($expectedIndex, $this->indicesManager->getType('authors', 'producers'));
+
+		$this->assertEquals($expectedIndex, $this->indicesManager->getType('authors', 'directors'));
 	}
 
 	public function testDeleting()
