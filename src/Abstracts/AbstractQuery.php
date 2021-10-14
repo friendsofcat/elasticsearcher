@@ -181,6 +181,15 @@ abstract class AbstractQuery
 		$this->setQueryStringParam('search_type', $type);
 	}
 
+    /**
+     * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-your-data.html#track-total-hits
+     * @param string $bool
+     */
+    protected function setTrackTotalHits($bool)
+    {
+        $this->setQueryStringParam('track_total_hits', $bool);
+    }
+
 	/**
 	 * @return string
 	 */
@@ -195,29 +204,31 @@ abstract class AbstractQuery
 	 * @return array
 	 */
 	protected function buildQuery()
-	{
-		$this->setup();
+    {
+        $this->setup();
+        //forcing the count to be accurate
+        $this->setTrackTotalHits(true);
 
-		$query = array();
+        $query = array();
 
-		// Index always needs to be provided. _all means a cross index search.
-		$query['index'] = empty($this->indices) ? '_all' : implode(',', array_values($this->indices));
+        // Index always needs to be provided. _all means a cross index search.
+        $query['index'] = empty($this->indices) ? '_all' : implode(',', array_values($this->indices));
 
-		// Type is not required, will search in the entire index.
-		if (!empty($this->types)) {
-			$query['type'] = implode(',', array_values($this->types));
-		}
+        // Type is not required, will search in the entire index.
+        if (!empty($this->types)) {
+            $query['type'] = implode(',', array_values($this->types));
+        }
 
-		// Replace Fragments with their raw body.
-		$query['body'] = $this->fragmentParser->parse($this->body);
+        // Replace Fragments with their raw body.
+        $query['body'] = $this->fragmentParser->parse($this->body);
 
-		// Add all query string params, the SDK will only add known params to the URL.
-		foreach ($this->queryStringParams as $paramName => $paramValue) {
-			$query[$paramName] = $paramValue;
-		}
+        // Add all query string params, the SDK will only add known params to the URL.
+        foreach ($this->queryStringParams as $paramName => $paramValue) {
+            $query[$paramName] = $paramValue;
+        }
 
-		return $query;
-	}
+        return $query;
+    }
 
 	/**
 	 * @return mixed
